@@ -22,6 +22,15 @@ namespace TrainingHelperServer.DTO
             this.LastName = owner.LastName;
 
         }
+        public Models.Owner GetModel()
+        {
+            Models.Owner o = new Models.Owner();
+            o.OwnerId = this.OwnerId;
+            o.Email = this.Email;
+            o.FirstName = this.FirstName;
+            o.LastName = this.LastName;
+            return o;
+        }
 
     }
 }

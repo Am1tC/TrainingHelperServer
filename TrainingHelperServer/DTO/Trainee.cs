@@ -41,7 +41,23 @@ namespace TrainingHelperServer.DTO
             this.Email = trainee.Email;
             this.Picture = trainee.Picture;
 
-        }    
+        }
+
+        public Models.Trainee GetModel()
+        {
+            Models.Trainee t = new Models.Trainee();
+            t.TraineeId = this.TraineeId;
+            t.FirstName = this.FirstName;
+            t.LastName = this.LastName;
+            t.SubscriptionStartDate = this.SubscriptionStartDate;
+            t.SubscriptionEndDate = this.SubscriptionEndDate;
+            t.BirthDate = this.BirthDate;
+            t.Gender = this.Gender;
+            t.PhoneNum = this.PhoneNum;
+            t.Email = this.Email;
+            t.Picture = this.Picture;
+            return t;
+        }
 
 
 

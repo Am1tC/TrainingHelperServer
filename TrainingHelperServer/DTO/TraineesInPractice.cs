@@ -18,7 +18,7 @@ namespace TrainingHelperServer.DTO
             this.TraineeId = traineesInPractice.TraineeId;
             this.TrainingNumber = traineesInPractice.TrainingNumber;
             this.HasArrived = traineesInPractice.HasArrived;
-            this.Trainee = traineesInPractice.Trainee;
+            //this.Trainee = traineesInPractice.Trainee;
 
 
         }
@@ -27,9 +27,13 @@ namespace TrainingHelperServer.DTO
             Models.TraineesInPractice tip =new Models.TraineesInPractice();
             tip.TraineeId = this.TraineeId;
             tip.TrainingNumber = this.TrainingNumber;
+            tip.HasArrived = this.HasArrived;
+            //tip.Trainee = this.Trainee;
+            return tip;
 
         }
 
+
     }
 }
-}
+

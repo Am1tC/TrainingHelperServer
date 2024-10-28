@@ -22,6 +22,11 @@ public class TrainingHelperAPIController : ControllerBase
     {
         return Ok("Server Responded Successfully");
     }
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] DTO.)
+    {
+
+    }
 
 }
 

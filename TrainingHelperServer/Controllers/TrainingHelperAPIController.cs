@@ -1,5 +1,6 @@
 ﻿using TrainingHelperServer.Models;
 using Microsoft.AspNetCore.Mvc;
+namespace TrainingHelperServer.Controllers;
 
 [Route("api")]
 [ApiController]
@@ -23,8 +24,35 @@ public class TrainingHelperAPIController : ControllerBase
         return Ok("Server Responded Successfully");
     }
     [HttpPost("login")]
-    public IActionResult Login([FromBody] DTO.)
+    public IActionResult LoginTrainee([FromBody] DTO.LoginInfo loginDto)
     {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get model user class from DB with matching email. 
+            Models.Trainee? trainee = context.GetTrainee(loginDto.Id);
+
+            //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
+            if (trainee == null || trainee.Password != loginDto.Password)
+            {
+                return Unauthorized();
+            }
+
+            //Login suceed! now mark login in session memory!
+            HttpContext.Session.SetString("loggedInUser", trainee.TraineeId.ToString());
+
+            DTO.Trainee dtotrainee = new DTO.Trainee(trainee);
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtotrainee);
+
+           
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
 
     }
 

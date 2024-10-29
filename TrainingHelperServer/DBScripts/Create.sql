@@ -29,6 +29,7 @@ CREATE TABLE Trainee (
 		PhoneNum nvarchar (225) Not null,
 		Email nvarchar (225) Not null,
 		Picture nvarchar (225),
+		Password nvarchar (225),
 		);
 
 CREATE TABLE [Owner] (
@@ -49,6 +50,7 @@ CREATE TABLE Trainer (
 		PhoneNum nvarchar (225) Not null,
 		Email nvarchar (225) unique Not null,
 		Picture nvarchar (225),
+		Password nvarchar (225),
 		);
 
 CREATE TABLE Training (
@@ -99,7 +101,7 @@ CREATE TABLE TrainingFieldsInTraining(
 
 ---
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';
----
+---           TrainingHelperLogin
 Go
 
 CREATE USER [TrainingHelperUser] FOR LOGIN
@@ -112,7 +114,6 @@ Go
 ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
 
 Go
-
 
 
 

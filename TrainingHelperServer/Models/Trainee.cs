@@ -41,4 +41,7 @@ public partial class Trainee
 
     [StringLength(225)]
     public string? Picture { get; set; }
+
+    [StringLength(225)]
+    public string? Password { get; set; }
 }

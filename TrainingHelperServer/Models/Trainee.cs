@@ -22,22 +22,22 @@ public partial class Trainee
     public string LastName { get; set; } = null!;
 
     [Column(TypeName = "datetime")]
-    public DateTime SubscriptionStartDate { get; set; }
+    public DateTime? SubscriptionStartDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime SubscriptionEndDate { get; set; }
+    public DateTime? SubscriptionEndDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     [StringLength(225)]
-    public string Gender { get; set; } = null!;
+    public string? Gender { get; set; }
 
     [StringLength(225)]
-    public string PhoneNum { get; set; } = null!;
+    public string? PhoneNum { get; set; }
 
     [StringLength(225)]
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; }
 
     [StringLength(225)]
     public string? Picture { get; set; }

@@ -41,12 +41,12 @@ public partial class TrainingHelperDbContext : DbContext
     {
         modelBuilder.Entity<Owner>(entity =>
         {
-            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B847F165AF");
+            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B880A5AF8E");
         });
 
         modelBuilder.Entity<Trainee>(entity =>
         {
-            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA963DCACD");
+            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA1A1CB96B");
         });
 
         modelBuilder.Entity<TraineesInPractice>(entity =>
@@ -58,19 +58,19 @@ public partial class TrainingHelperDbContext : DbContext
 
         modelBuilder.Entity<Trainer>(entity =>
         {
-            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7C995DBE20");
+            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7C65BB0012");
         });
 
         modelBuilder.Entity<Training>(entity =>
         {
-            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC0470995A87F4");
+            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC0470A11DFF33");
 
             entity.HasOne(d => d.Trainer).WithMany(p => p.Training).HasConstraintName("FK__Training__Traine__2B3F6F97");
         });
 
         modelBuilder.Entity<TrainingField>(entity =>
         {
-            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__6418952605415702");
+            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__641895261E9F419A");
 
             entity.Property(e => e.TrainingFieldId).ValueGeneratedNever();
         });
@@ -91,7 +91,7 @@ public partial class TrainingHelperDbContext : DbContext
 
         modelBuilder.Entity<TrainingPicture>(entity =>
         {
-            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D87F5F33FC");
+            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D8744B1478");
 
             entity.HasOne(d => d.TrainingNumberNavigation).WithMany(p => p.TrainingPictures).HasConstraintName("FK__TrainingP__Train__31EC6D26");
         });

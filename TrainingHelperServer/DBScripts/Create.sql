@@ -18,16 +18,16 @@ Use TrainingHelperDb;
 Go
 
 CREATE TABLE Trainee (
-		TraineeId int identity(1000,1) Primary KEY Not null,
+		TraineeId int identity(1000,1) Primary KEY ,
 		Id nvarchar (225) Not null,
 		FirstName nvarchar (20) Not null ,
 		LastName nvarchar (225) Not null,
-		SubscriptionStartDate Datetime Not null,
-		SubscriptionEndDate Datetime Not null,
-		BirthDate Datetime Not null,
-		Gender nvarchar (225) Not null,
-		PhoneNum nvarchar (225) Not null,
-		Email nvarchar (225) Not null,
+		SubscriptionStartDate Datetime ,
+		SubscriptionEndDate Datetime  ,
+		BirthDate Datetime ,
+		Gender nvarchar (225) ,
+		PhoneNum nvarchar (225) ,
+		Email nvarchar (225) ,
 		Picture nvarchar (225),
 		Password nvarchar (225),
 		);
@@ -98,6 +98,7 @@ CREATE TABLE TrainingFieldsInTraining(
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (1,'a@a.com','Amit','c')
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate) VALUES(223,'Amit','C',223,'20-aug-2007')
 
 ---
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';
@@ -109,7 +110,7 @@ CREATE USER [TrainingHelperUser] FOR LOGIN
 
 Go
 
-
+Select * From Trainee
 
 ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
 
@@ -118,4 +119,4 @@ Go
 
 
 
---scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=TrainingHelperDb;User ID=TrainingHelperLogin;Password=123;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context TrainingHelperDbContext -DataAnnotations –force
+--v

@@ -13,11 +13,11 @@ namespace TrainingHelperServer.DTO
 
         public string LastName { get; set; } = null!;
 
-        public DateTime SubscriptionStartDate { get; set; }
+        public DateTime? SubscriptionStartDate { get; set; }
 
-        public DateTime SubscriptionEndDate { get; set; }
+        public DateTime? SubscriptionEndDate { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         public string Gender { get; set; } = null!;
 

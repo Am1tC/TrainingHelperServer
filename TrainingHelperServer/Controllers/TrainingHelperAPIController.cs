@@ -56,6 +56,34 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] DTO.Trainee userDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            userDto.SubscriptionStartDate = DateTime.Now;
+            userDto.SubscriptionEndDate = DateTime.Now.AddYears(1);
+            userDto.BirthDate = DateTime.Now;
+            //Create model user class
+            Models.Trainee modelsUser = userDto.GetModel();
+
+            context.Trainees.Add(modelsUser);
+            context.SaveChanges();
+
+            //User was added!
+            DTO.Trainee dtoUser = new DTO.Trainee(modelsUser);
+            //dtoUser.pro = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoUser);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
 
 
 

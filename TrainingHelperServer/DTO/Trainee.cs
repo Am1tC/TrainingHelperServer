@@ -19,13 +19,13 @@ namespace TrainingHelperServer.DTO
 
         public DateTime? BirthDate { get; set; }
 
-        public string Gender { get; set; } = null!;
-
+        public string? Gender { get; set; } 
         public string PhoneNum { get; set; } = null!;
 
         public string Email { get; set; } = null!;
 
         public string? Picture { get; set; }
+        public string? Password { get; set; }
 
         public Trainee() { }
         public Trainee(Models.Trainee trainee) 

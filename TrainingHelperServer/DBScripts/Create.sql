@@ -19,7 +19,7 @@ Go
 
 CREATE TABLE Trainee (
 		TraineeId int identity(1000,1) Primary KEY ,
-		Id nvarchar (225) Not null,
+		Id nvarchar (225) unique Not null,
 		FirstName nvarchar (20) Not null ,
 		LastName nvarchar (225) Not null,
 		SubscriptionStartDate Datetime ,
@@ -42,13 +42,13 @@ CREATE TABLE [Owner] (
 		
 CREATE TABLE Trainer (
 		TrainerId int identity(1000,1) Primary KEY Not null,
-		Id nvarchar (225) Not null,
+		Id nvarchar (225) unique Not null,
 		FirstName nvarchar (20) Not null ,
 		LastName nvarchar (225) Not null,
 		BirthDate Date Not null,
 		Gender nvarchar (225) Not null,
 		PhoneNum nvarchar (225) Not null,
-		Email nvarchar (225) unique Not null,
+		Email nvarchar (225)  Not null,
 		Picture nvarchar (225),
 		Password nvarchar (225),
 		);

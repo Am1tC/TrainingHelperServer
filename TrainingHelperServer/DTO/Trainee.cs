@@ -46,7 +46,7 @@ namespace TrainingHelperServer.DTO
         public Models.Trainee GetModel()
         {
             Models.Trainee t = new Models.Trainee();
-            t.TraineeId = this.TraineeId;
+            t.Id = this.Id;
             t.FirstName = this.FirstName;
             t.LastName = this.LastName;
             t.SubscriptionStartDate = this.SubscriptionStartDate;

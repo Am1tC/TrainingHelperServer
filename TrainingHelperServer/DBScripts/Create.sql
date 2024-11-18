@@ -119,4 +119,4 @@ Go
 
 
 
---v
+--scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=TrainingHelperDb;User ID=TrainingHelperLogin;Password=123;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context TrainingHelperDbContext -DataAnnotations –force

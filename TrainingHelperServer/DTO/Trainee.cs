@@ -31,6 +31,7 @@ namespace TrainingHelperServer.DTO
         public Trainee(Models.Trainee trainee) 
         {
             this.TraineeId = trainee.TraineeId;
+            this.Id = trainee.Id;
             this.FirstName = trainee.FirstName;
             this.LastName = trainee.LastName;
             this.SubscriptionStartDate = trainee.SubscriptionStartDate;

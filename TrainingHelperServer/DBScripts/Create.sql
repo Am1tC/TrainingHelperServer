@@ -63,6 +63,8 @@ CREATE TABLE Training (
 		Picture nvarchar (225) Not null,
 		);
 
+		INSERT INTO Training (TrainerId
+
 CREATE TABLE TraineesInPractice (
 		TraineeId int  Foreign key REFERENCES Trainee(TraineeID), 
 		TrainingNumber int  Foreign key REFERENCES Training(TrainingNumber) ,
@@ -95,7 +97,9 @@ CREATE TABLE TrainingFieldsInTraining(
 
 
 
---INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (1,'a@a.com','Amit','c')
+INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (1,'a@a.com','Amit','c')
+
+
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate) VALUES(223,'Amit','C',223,'20-aug-2007')

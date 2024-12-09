@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace TrainingHelperServer.Models;
@@ -19,5 +20,19 @@ public partial class TrainingHelperDbContext : DbContext
         return this.Trainers.Where(u => u.Id == id)
                             .FirstOrDefault();
     }
+
+    public Training GetTraining(DateTime date)
+    {
+        return this.Training.Where(t => t.Date == date)
+            .FirstOrDefault();
+                
+    }
+
+    public List<Training> GetTrainings(DateTime date)
+    {
+      return  this.Training.Where(t => t.Date == date).ToList();
+
+    }
+
 }
  

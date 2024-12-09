@@ -84,6 +84,28 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    // update profile imp
+
+    [HttpGet("showtrainings")]
+    public List<Training> ShowTrainings([FromBody] DateTime date)
+    {
+        try
+        {
+
+         
+            List<Training> modelsTraining = context.GetTrainings(date);
+
+           
+            return modelsTraining;
+        }
+        catch (Exception ex)
+        {
+            
+            return new List<Training>(); // Return an empty list as fallback
+        }
+
+    }
+
 
 
 

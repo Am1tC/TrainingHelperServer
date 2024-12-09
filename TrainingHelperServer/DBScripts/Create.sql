@@ -63,7 +63,7 @@ CREATE TABLE Training (
 		Picture nvarchar (225) Not null,
 		);
 
-		INSERT INTO Training (TrainerId
+		--INSERT INTO Training (TrainerId
 
 CREATE TABLE TraineesInPractice (
 		TraineeId int  Foreign key REFERENCES Trainee(TraineeID), 

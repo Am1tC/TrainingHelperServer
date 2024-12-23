@@ -1,5 +1,8 @@
 ﻿using TrainingHelperServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using TrainingHelperServer.DTO;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace TrainingHelperServer.Controllers;
 
 [Route("api")]
@@ -86,27 +89,58 @@ public class TrainingHelperAPIController : ControllerBase
 
     // update profile imp
 
-    [HttpGet("showtrainings")]
-    public List<Training> ShowTrainings([FromBody] DateTime date)
+    [HttpGet("showTrainings")]
+    //public List<DTO.Training> ShowTrainings([FromBody] DateTime date)
+    //{
+    //    try
+    //    {
+
+         
+    //        List<Training> modelsTraining = context.GetTrainings(date);
+
+           
+    //        return modelsTraining;
+    //    }
+    //    catch (Exception ex)
+    //    {
+            
+    //        return new List<Training>(); // Return an empty list as fallback
+    //    }
+
+    //}
+
+    [HttpGet("GetTrainings")]
+    public IActionResult GetTrainings([FromQuery] DateTime time)
     {
         try
         {
+            //Check if who is logged in
+            string? userEmail = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized("User is not logged in");
+            }
 
-         
-            List<Training> modelsTraining = context.GetTrainings(date);
+            //Read posts of the user
 
-           
-            return modelsTraining;
+            List<Models.Training> list = context.GetTraining(time);
+
+            List<DTO.Training> trainings = new List<DTO.Training>();
+
+            foreach (Models.Training t in list)
+            {
+                DTO.Training training = new DTO.Training(t);
+                
+                trainings.Add(training);
+            }
+            return Ok(trainings);
         }
         catch (Exception ex)
         {
-            
-            return new List<Training>(); // Return an empty list as fallback
+            return BadRequest(ex.Message);
         }
 
     }
-
-
 
 
 

@@ -21,14 +21,14 @@ public partial class TrainingHelperDbContext : DbContext
                             .FirstOrDefault();
     }
 
-    public Training GetTraining(DateTime date)
-    {
-        return this.Training.Where(t => t.Date == date)
-            .FirstOrDefault();
+    //public Training GetTraining(DateTime date)
+    //{
+    //    return this.Training.Where(t => t.Date == date)
+    //        .FirstOrDefault();
                 
-    }
+    //}
 
-    public List<Training> GetTrainings(DateTime date)
+    public List<Training> GetTraining(DateTime date)
     {
       return  this.Training.Where(t => t.Date == date).ToList();
 

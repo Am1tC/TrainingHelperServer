@@ -34,5 +34,12 @@ public partial class TrainingHelperDbContext : DbContext
 
     }
 
+    public List<Training> GetTrainings()
+    {
+        return this.Training.ToList();
+
+    }
+
+
 }
  

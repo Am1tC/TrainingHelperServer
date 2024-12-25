@@ -110,7 +110,7 @@ public class TrainingHelperAPIController : ControllerBase
     //}
 
     [HttpGet("GetTrainings")]
-    public IActionResult GetTrainings([FromQuery] DateTime time)
+    public IActionResult GetTrainings()
     {
         try
         {
@@ -123,7 +123,7 @@ public class TrainingHelperAPIController : ControllerBase
 
             //Read posts of the user
 
-            List<Models.Training> list = context.GetTraining(time);
+            List<Models.Training> list = context.GetTrainings();
 
             List<DTO.Training> trainings = new List<DTO.Training>();
 
@@ -142,8 +142,67 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    [HttpPost("SignUpForTraining")]
+    public IActionResult SignUpForTraining(int trainingNumber)
+    {
+        try
+        {
+            // Check if the user is logged in
+            string? userEmail = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized("User is not logged in");
+            }
 
+            // Retrieve the training session for the given training number
+            var training = context.GetTraining(DateTime.Now).FirstOrDefault(t => t.TrainingNumber == trainingNumber); // Filter by today's date or use any specific date you prefer
 
+            if (training == null)
+            {
+                return NotFound("Training not found.");
+            }
+
+            // Retrieve the trainee using the logged-in user's email
+            var trainee = context.Trainees.FirstOrDefault(t => t.Email == userEmail);
+
+            if (trainee == null)
+            {
+                return BadRequest("Trainee not found.");
+            }
+
+            // Check if the trainee is already signed up for this training
+            var existingSignUp = context.TraineesInPractices
+                .FirstOrDefault(tp => tp.TraineeId == trainee.TraineeId && tp.TrainingNumber == trainingNumber);
+
+            if (existingSignUp != null)
+            {
+                return BadRequest("You are already signed up for this training.");
+            }
+
+            // Add the trainee to the training
+            context.TraineesInPractices.Add(new Models.TraineesInPractice
+            {
+                TraineeId = trainee.TraineeId,
+                TrainingNumber = trainingNumber,
+                HasArrived = false // Initial status
+            });
+
+            context.SaveChanges(); // Commit changes to the database
+
+            return Ok("Successfully signed up for the training.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
 }
+
+
+
+
+
+
+
 

@@ -17,87 +17,141 @@ Go
 Use TrainingHelperDb;
 Go
 
-CREATE TABLE Trainee (
-		TraineeId int identity(1000,1) Primary KEY ,
-		Id nvarchar (225) unique Not null,
-		FirstName nvarchar (20) Not null ,
-		LastName nvarchar (225) Not null,
-		SubscriptionStartDate Datetime ,
-		SubscriptionEndDate Datetime  ,
-		BirthDate Datetime ,
-		Gender nvarchar (225) ,
-		PhoneNum nvarchar (225) ,
-		Email nvarchar (225) ,
-		Picture nvarchar (225),
-		Password nvarchar (225),
-		);
-
-CREATE TABLE [Owner] (
-		OwnerId nvarchar (225) Primary KEY Not null,
-		Email nvarchar (225) Not null,
-		FirstName nvarchar (225) Not null,
-		LastName nvarchar (225) Not null,		
-		);
-
-		
 CREATE TABLE Trainer (
-		TrainerId int identity(1000,1) Primary KEY Not null,
-		Id nvarchar (225) unique Not null,
-		FirstName nvarchar (20) Not null ,
-		LastName nvarchar (225) Not null,
-		BirthDate Date Not null,
-		Gender nvarchar (225) Not null,
-		PhoneNum nvarchar (225) Not null,
-		Email nvarchar (225)  Not null,
-		Picture nvarchar (225),
-		Password nvarchar (225),
-		);
+    TrainerId INT IDENTITY(1000,1) PRIMARY KEY NOT NULL,
+    Id NVARCHAR(225) UNIQUE NOT NULL,
+    FirstName NVARCHAR(20) NOT NULL,
+    LastName NVARCHAR(225) NOT NULL,
+    BirthDate DATE NOT NULL,
+    Gender NVARCHAR(225) NOT NULL,
+    PhoneNum NVARCHAR(225) NOT NULL,
+    Email NVARCHAR(225) NOT NULL,
+    Picture NVARCHAR(225),
+    Password NVARCHAR(225)
+);
 
+-- Create Trainee table
+CREATE TABLE Trainee (
+    TraineeId INT IDENTITY(1000,1) PRIMARY KEY NOT NULL,
+    Id NVARCHAR(225) UNIQUE NOT NULL,
+    FirstName NVARCHAR(20) NOT NULL,
+    LastName NVARCHAR(225) NOT NULL,
+    SubscriptionStartDate DATETIME,
+    SubscriptionEndDate DATETIME,
+    BirthDate DATETIME,
+    Gender NVARCHAR(225),
+    PhoneNum NVARCHAR(225),
+    Email NVARCHAR(225),
+    Picture NVARCHAR(225),
+    Password NVARCHAR(225)
+);
+
+-- Create TrainingField table
+CREATE TABLE TrainingField (
+    TrainingFieldId INT PRIMARY KEY NOT NULL,
+    Field NVARCHAR(225) NOT NULL
+);
+
+-- Create Training table
 CREATE TABLE Training (
-		TrainingNumber int identity(1000,1) Primary KEY Not null,
-		TrainerId int Foreign key REFERENCES Trainer(TrainerId),
-		MaxParticipants int Not null,
-		Place nvarchar (225) Not null,
-		[Date] Datetime, 
-		Duration nvarchar (225) Not null,
-		Picture nvarchar (225) Not null,
-		);
+    TrainingNumber INT IDENTITY(1000,1) PRIMARY KEY NOT NULL,
+    TrainerId INT FOREIGN KEY REFERENCES Trainer(TrainerId),
+    MaxParticipants INT NOT NULL,
+    Place NVARCHAR(225) NOT NULL,
+    [Date] DATETIME NOT NULL,
+    Duration NVARCHAR(225) NOT NULL,
+    Picture NVARCHAR(225) NOT NULL
+);
 
-		--INSERT INTO Training (TrainerId
-
+-- Create TraineesInPractice table
 CREATE TABLE TraineesInPractice (
-		TraineeId int  Foreign key REFERENCES Trainee(TraineeID), 
-		TrainingNumber int  Foreign key REFERENCES Training(TrainingNumber) ,
-		HasArrived bit Not null default 0,
-		);
+    TraineeId INT FOREIGN KEY REFERENCES Trainee(TraineeId),
+    TrainingNumber INT FOREIGN KEY REFERENCES Training(TrainingNumber),
+    HasArrived BIT NOT NULL DEFAULT 0
+);
 
+-- Create TrainingPictures table
+CREATE TABLE TrainingPictures (
+    PictureId NVARCHAR(225) PRIMARY KEY,
+    TrainingNumber INT FOREIGN KEY REFERENCES Training(TrainingNumber),
+    PictureEnding NVARCHAR(225) NOT NULL
+);
 
+-- Create TrainingFieldsInTrainer table
+CREATE TABLE TrainingFieldsInTrainer (
+    TrainerId INT FOREIGN KEY REFERENCES Trainer(TrainerId),
+    TrainingFieldId INT FOREIGN KEY REFERENCES TrainingField(TrainingFieldId)
+);
 
-	
-CREATE TABLE TrainingPictures( 
-		PictureId nvarchar (225) Primary Key,
-		TrainingNumber int Foreign key REFERENCES Training(TrainingNumber),
-		PictureEnding nvarchar (225) Not null,
-		);
-		 
-CREATE TABLE TrainingField(
-		TrainingFieldId int Primary KEY Not null,
-		Field nvarchar (225) Not null,
-		);
+-- Create TrainingFieldsInTraining table
+CREATE TABLE TrainingFieldsInTraining (
+    TrainingFieldId INT FOREIGN KEY REFERENCES TrainingField(TrainingFieldId),
+    TrainingNumber INT FOREIGN KEY REFERENCES Training(TrainingNumber)
+);
 
-CREATE TABLE TrainingFieldsInTrainer(
-		TrainerId int Foreign key REFERENCES Trainer(TrainerId),
-		TrainingFieldId int Foreign key REFERENCES TrainingField(TrainingFieldId),
-		);
+-- Insert data into Trainer
+INSERT INTO Trainer (Id, FirstName, LastName, BirthDate, Gender, PhoneNum, Email, Picture, Password)
+VALUES
+('1', 'John', 'Doe', '1985-07-15', 'Male', '1234567890', 'john.doe@example.com', 'john.png', 'password1'),
+('2', 'Jane', 'Smith', '1990-05-20', 'Female', '0987654321', 'jane.smith@example.com', 'jane.png', 'password2'),
+('3', 'Alex', 'Taylor', '1988-03-25', 'Non-Binary', '5551234567', 'alex.taylor@example.com', 'alex.png', 'password3');
 
-CREATE TABLE TrainingFieldsInTraining(
-		TrainingFieldId int Foreign key REFERENCES TrainingField(TrainingFieldId),
-		TrainingNumber int Foreign key REFERENCES Training(TrainingNumber),
-		);
+-- Insert data into Trainee
+INSERT INTO Trainee (Id, FirstName, LastName, PhoneNum, Email)
+VALUES
+('T1', 'Alice', 'Johnson', '1112223333', 'alice.johnson@example.com'),
+('T2', 'Bob', 'Williams', '2223334444', 'bob.williams@example.com'),
+('T3', 'Charlie', 'Brown', '3334445555', 'charlie.brown@example.com');
 
+-- Insert data into TrainingField
+INSERT INTO TrainingField (TrainingFieldId, Field)
+VALUES
+(1, 'Yoga'),
+(2, 'BJJ'),
+(3, 'Muay Thai'),
+(4, 'Boxing'),
+(5, 'Calisthenics');
 
+-- Insert data into Training
+INSERT INTO Training (TrainerId, MaxParticipants, Place, [Date], Duration, Picture)
+VALUES
+(1000, 20, 'Studio A', '2025-01-15 10:00:00', '1 Hour', 'yoga_training.png'),
+(1001, 15, 'Studio B', '2025-01-16 14:00:00', '1.5 Hours', 'bjj_training.png'),
+(1002, 25, 'Studio C', '2025-01-17 18:00:00', '2 Hours', 'muay_thai_training.png'),
+(1000, 20, 'Studio D', '2025-01-18 09:00:00', '1 Hour', 'boxing_training.png'),
+(1002, 15, 'Studio E', '2025-01-19 11:00:00', '1.5 Hours', 'calisthenics_training.png');
 
-INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (1,'a@a.com','Amit','c')
+-- Insert data into TrainingFieldsInTrainer
+INSERT INTO TrainingFieldsInTrainer (TrainerId, TrainingFieldId)
+VALUES
+(1000, 1), -- John -> Yoga
+(1001, 2), -- Jane -> BJJ
+(1002, 3); -- Alex -> Muay Thai
+
+-- Insert data into TrainingFieldsInTraining
+INSERT INTO TrainingFieldsInTraining (TrainingFieldId, TrainingNumber)
+VALUES
+(1, 1000), -- Yoga -> Training 1
+(2, 1001), -- BJJ -> Training 2
+(3, 1002), -- Muay Thai -> Training 3
+(4, 1003), -- Boxing -> Training 4
+(5, 1004); -- Calisthenics -> Training 5
+
+-- Insert data into TrainingPictures
+INSERT INTO TrainingPictures (PictureId, TrainingNumber, PictureEnding)
+VALUES
+('P1', 1000, 'yoga1.jpg'),
+('P2', 1001, 'bjj1.jpg'),
+('P3', 1002, 'muay_thai1.jpg'),
+('P4', 1003, 'boxing1.jpg'),
+('P5', 1004, 'calisthenics1.jpg');
+
+-- Insert data into TraineesInPractice
+INSERT INTO TraineesInPractice (TraineeId, TrainingNumber, HasArrived)
+VALUES
+(1000, 1000, 1), -- Alice -> Yoga Training
+(1001, 1001, 0), -- Bob -> BJJ Training
+(1002, 1002, 1); -- Charlie -> Muay Thai Training
 
 
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
@@ -115,6 +169,8 @@ CREATE USER [TrainingHelperUser] FOR LOGIN
 Go
 
 Select * From Trainee
+Select * From Trainer
+select * from Training
 
 ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
 

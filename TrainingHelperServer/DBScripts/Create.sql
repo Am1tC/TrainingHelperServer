@@ -118,8 +118,8 @@ VALUES
 (1000, 20, 'Studio A', '2025-01-15 10:00:00', '1 Hour', 'yoga_training.png'),
 (1001, 15, 'Studio B', '2025-01-16 14:00:00', '1.5 Hours', 'bjj_training.png'),
 (1002, 25, 'Studio C', '2025-01-17 18:00:00', '2 Hours', 'muay_thai_training.png'),
-(1000, 20, 'Studio D', '2025-01-18 09:00:00', '1 Hour', 'boxing_training.png'),
-(1002, 15, 'Studio E', '2025-01-19 11:00:00', '1.5 Hours', 'calisthenics_training.png');
+(1000, 20, 'Studio D', '2025-01-16 09:00:00', '1 Hour', 'boxing_training.png'),
+(1002, 15, 'Studio E', '2025-01-15 11:00:00', '1.5 Hours', 'calisthenics_training.png');
 
 -- Insert data into TrainingFieldsInTrainer
 INSERT INTO TrainingFieldsInTrainer (TrainerId, TrainingFieldId)

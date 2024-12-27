@@ -41,6 +41,7 @@ namespace TrainingHelperServer.DTO
             this.PhoneNum = trainee.PhoneNum;
             this.Email = trainee.Email;
             this.Picture = trainee.Picture;
+            this.Password = trainee.Password;
 
         }
 
@@ -56,6 +57,7 @@ namespace TrainingHelperServer.DTO
             t.Gender = this.Gender;
             t.PhoneNum = this.PhoneNum;
             t.Email = this.Email;
+            t.Password = this.Password;
             t.Picture = this.Picture;
             return t;
         }

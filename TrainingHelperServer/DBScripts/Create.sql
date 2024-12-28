@@ -156,8 +156,8 @@ VALUES
 
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
-INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate) VALUES(223,'Amit','C',223,'20-aug-2007')
-
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES(223,'Amit','C',223,'20-aug-2007','s@s.com')
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES(222,'Amit','b',222,'20-aug-2000','s@s.com')
 ---
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';
 ---           TrainingHelperLogin
@@ -171,6 +171,8 @@ Go
 Select * From Trainee
 Select * From Trainer
 select * from Training
+
+select * from TraineesInPractice
 
 ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
 

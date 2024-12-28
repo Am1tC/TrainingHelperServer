@@ -89,25 +89,7 @@ public class TrainingHelperAPIController : ControllerBase
 
     // update profile imp
 
-    [HttpGet("showTrainings")]
-    //public List<DTO.Training> ShowTrainings([FromBody] DateTime date)
-    //{
-    //    try
-    //    {
 
-         
-    //        List<Training> modelsTraining = context.GetTrainings(date);
-
-           
-    //        return modelsTraining;
-    //    }
-    //    catch (Exception ex)
-    //    {
-            
-    //        return new List<Training>(); // Return an empty list as fallback
-    //    }
-
-    //}
 
     [HttpGet("GetTrainings")]
     public IActionResult GetTrainings()
@@ -121,7 +103,7 @@ public class TrainingHelperAPIController : ControllerBase
                 return Unauthorized("User is not logged in");
             }
 
-            //Read posts of the user
+
 
             List<Models.Training> list = context.GetTrainings();
 
@@ -142,43 +124,38 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    [HttpPost("SignUpForTraining")]
-    public IActionResult SignUpForTraining(int trainingNumber)
+    
+
+    [HttpPost("OrderTraining")]
+    public IActionResult OrderTraining(int trainingNumber)
     {
         try
-        {
-            // Check if the user is logged in
-            string? userEmail = HttpContext.Session.GetString("loggedInUser");
-            if (string.IsNullOrEmpty(userEmail))
+        {   // Check if the user is logged in
+            string? userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User is not logged in");
             }
-
+            
             // Retrieve the training session for the given training number
-            var training = context.GetTraining(DateTime.Now).FirstOrDefault(t => t.TrainingNumber == trainingNumber); // Filter by today's date or use any specific date you prefer
-
+            Models.Training? training = context.GetTraining(trainingNumber);
             if (training == null)
             {
                 return NotFound("Training not found.");
             }
-
-            // Retrieve the trainee using the logged-in user's email
-            var trainee = context.Trainees.FirstOrDefault(t => t.Email == userEmail);
-
+            // Retrieve the trainee using the logged-in user's id
+            var trainee = context.GetTrainee(userId);
             if (trainee == null)
             {
                 return BadRequest("Trainee not found.");
             }
-
             // Check if the trainee is already signed up for this training
             var existingSignUp = context.TraineesInPractices
                 .FirstOrDefault(tp => tp.TraineeId == trainee.TraineeId && tp.TrainingNumber == trainingNumber);
-
             if (existingSignUp != null)
             {
                 return BadRequest("You are already signed up for this training.");
             }
-
             // Add the trainee to the training
             context.TraineesInPractices.Add(new Models.TraineesInPractice
             {
@@ -186,16 +163,19 @@ public class TrainingHelperAPIController : ControllerBase
                 TrainingNumber = trainingNumber,
                 HasArrived = false // Initial status
             });
-
             context.SaveChanges(); // Commit changes to the database
-
             return Ok("Successfully signed up for the training.");
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
+           
+
+
     }
+
+
 
 }
 

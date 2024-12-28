@@ -10,9 +10,14 @@ public partial class TrainingHelperDbContext : DbContext
     public Trainee? GetTrainee(string id)
     {
         return this.Trainees.Where(u => u.Id == id)
-                            //.Include(u=> u.FirstName)
                             .FirstOrDefault();
                             
+    }
+
+    public Trainee? GetTraineeViaEmail(string email)
+    {
+        return this.Trainees.Where(u => u.Email == email)
+                            .FirstOrDefault();
     }
 
     public Trainer? GetTrainer(string id)
@@ -21,12 +26,12 @@ public partial class TrainingHelperDbContext : DbContext
                             .FirstOrDefault();
     }
 
-    //public Training GetTraining(DateTime date)
-    //{
-    //    return this.Training.Where(t => t.Date == date)
-    //        .FirstOrDefault();
-                
-    //}
+    public Training? GetTraining(int trainingnumber)
+    {
+        return this.Training.Where(t => t.TrainingNumber == trainingnumber)
+            .FirstOrDefault();
+
+    }
 
     public List<Training> GetTraining(DateTime date)
     {
@@ -37,7 +42,6 @@ public partial class TrainingHelperDbContext : DbContext
     public List<Training> GetTrainings()
     {
         return this.Training.ToList();
-
     }
 
 

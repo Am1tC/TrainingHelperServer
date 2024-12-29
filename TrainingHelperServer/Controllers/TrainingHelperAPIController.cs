@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using TrainingHelperServer.DTO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 namespace TrainingHelperServer.Controllers;
 
 [Route("api")]
@@ -87,7 +88,50 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    // update profile imp
+
+    //update profile imp
+   [HttpPost("updateUser")]
+    public IActionResult UpdateUser([FromBody] DTO.Trainee userDto)
+    {
+        try
+        {
+            //Check if who is logged in
+            string? userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Trainee? user = context.GetTrainee(userId);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+
+            if (user == null || userDto.Id != user.Id)
+            {
+                return Unauthorized("trying to update a different user");
+            }
+
+            Models.Trainee appUser = userDto.GetModel();
+
+            context.Entry(appUser).State = EntityState.Modified;
+
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+
+
+
+
 
 
 
@@ -144,7 +188,8 @@ public class TrainingHelperAPIController : ControllerBase
                 return NotFound("Training not found.");
             }
             // Retrieve the trainee using the logged-in user's id
-            var trainee = context.GetTrainee(userId);
+
+            var trainee = context.GetTrainee(userId); //returns null for unknown reason
             if (trainee == null)
             {
                 return BadRequest("Trainee not found.");

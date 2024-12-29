@@ -45,6 +45,8 @@ CREATE TABLE Trainee (
     Picture NVARCHAR(225),
     Password NVARCHAR(225)
 );
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email,Gender,PhoneNum,Picture,SubscriptionStartDate,SubscriptionEndDate) VALUES(223,'Amit','C',223,'20-aug-2007','s@s.com','m','0500000000','.jpg','29-aug-2024','29-aug-2025')
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email,Gender,PhoneNum,Picture,SubscriptionStartDate,SubscriptionEndDate) VALUES(223223223,'Amit','C','223a','20-aug-2007','s@s.com','m','0506666666','.jpg','29-aug-2024','29-aug-2025')
 
 -- Create TrainingField table
 CREATE TABLE TrainingField (
@@ -156,7 +158,7 @@ VALUES
 
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
-INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES(223,'Amit','C',223,'20-aug-2007','s@s.com')
+
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES(222,'Amit','b',222,'20-aug-2000','s@s.com')
 ---
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';

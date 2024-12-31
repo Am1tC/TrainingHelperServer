@@ -1,4 +1,5 @@
 
+using MailKit;
 using Microsoft.EntityFrameworkCore;
 using TrainingHelperServer.Models;
 
@@ -41,6 +42,9 @@ namespace TrainingHelperServer
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             #endregion
+
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<IMailService, MailService>();
 
             var app = builder.Build();
 

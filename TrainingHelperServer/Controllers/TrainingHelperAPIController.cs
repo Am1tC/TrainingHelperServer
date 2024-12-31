@@ -135,6 +135,8 @@ public class TrainingHelperAPIController : ControllerBase
 
 
 
+
+
     [HttpGet("GetTrainings")]
     public IActionResult GetTrainings()
     {
@@ -219,6 +221,8 @@ public class TrainingHelperAPIController : ControllerBase
 
 
     }
+
+
 
 
 

@@ -4,9 +4,9 @@ namespace TrainingHelperServer.DTO
 {
     public class TraineesInPractice
     {
-        public int? TraineeId { get; set; }
+        public int TraineeId { get; set; }
 
-        public int? TrainingNumber { get; set; }
+        public int TrainingNumber { get; set; }
 
         public bool HasArrived { get; set; }
 

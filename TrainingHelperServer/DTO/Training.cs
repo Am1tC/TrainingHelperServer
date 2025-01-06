@@ -13,7 +13,7 @@ namespace TrainingHelperServer.DTO
 
         public string Place { get; set; } = null!;
 
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
 
         public string Duration { get; set; } = null!;
 

@@ -38,7 +38,7 @@ CREATE TABLE Trainee (
     LastName NVARCHAR(225) NOT NULL,
     SubscriptionStartDate DATETIME,
     SubscriptionEndDate DATETIME,
-    BirthDate DATETIME,
+    BirthDate DATETIME NOT NULL,
     Gender NVARCHAR(225),
     PhoneNum NVARCHAR(225),
     Email NVARCHAR(225),
@@ -67,8 +67,11 @@ CREATE TABLE Training (
 
 -- Create TraineesInPractice table
 CREATE TABLE TraineesInPractice (
+
+
     TraineeId INT FOREIGN KEY REFERENCES Trainee(TraineeId),
     TrainingNumber INT FOREIGN KEY REFERENCES Training(TrainingNumber),
+    PRIMARY KEY (TraineeId, TrainingNumber),
     HasArrived BIT NOT NULL DEFAULT 0
 );
 
@@ -159,7 +162,8 @@ VALUES
 --INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
 
-INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES(222,'Amit','b',222,'20-aug-2000','s@s.com')
+INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES('222333444','Amit','b','222a','20-aug-2000','s@s.com')
+
 ---
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';
 ---           TrainingHelperLogin
@@ -174,9 +178,11 @@ Select * From Trainee
 Select * From Trainer
 select * from Training
 
+
+
 select * from TraineesInPractice
 
-ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
+
 
 Go
 

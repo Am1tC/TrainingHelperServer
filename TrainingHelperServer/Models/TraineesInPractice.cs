@@ -6,19 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TrainingHelperServer.Models;
 
-[Keyless]
+[PrimaryKey("TraineeId", "TrainingNumber")]
 [Table("TraineesInPractice")]
 public partial class TraineesInPractice
 {
-    public int? TraineeId { get; set; }
+    [Key]
+    public int TraineeId { get; set; }
 
-    public int? TrainingNumber { get; set; }
+    [Key]
+    public int TrainingNumber { get; set; }
 
     public bool HasArrived { get; set; }
 
     [ForeignKey("TraineeId")]
-    public virtual Trainee? Trainee { get; set; }
+    [InverseProperty("TraineesInPractices")]
+    public virtual Trainee Trainee { get; set; } = null!;
 
     [ForeignKey("TrainingNumber")]
-    public virtual Training? TrainingNumberNavigation { get; set; }
+    [InverseProperty("TraineesInPractices")]
+    public virtual Training TrainingNumberNavigation { get; set; } = null!;
 }

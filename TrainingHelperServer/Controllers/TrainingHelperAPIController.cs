@@ -44,7 +44,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
 
             //Login suceed! now mark login in session memory!
-            HttpContext.Session.SetString("loggedInUser", trainee.TraineeId.ToString());
+            HttpContext.Session.SetString("loggedInUser", trainee.Id.ToString());
 
             DTO.Trainee dtotrainee = new DTO.Trainee(trainee);
             //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);

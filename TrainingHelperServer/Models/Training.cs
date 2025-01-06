@@ -19,13 +19,16 @@ public partial class Training
     public string Place { get; set; } = null!;
 
     [Column(TypeName = "datetime")]
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     [StringLength(225)]
     public string Duration { get; set; } = null!;
 
     [StringLength(225)]
     public string Picture { get; set; } = null!;
+
+    [InverseProperty("TrainingNumberNavigation")]
+    public virtual ICollection<TraineesInPractice> TraineesInPractices { get; set; } = new List<TraineesInPractice>();
 
     [ForeignKey("TrainerId")]
     [InverseProperty("Training")]

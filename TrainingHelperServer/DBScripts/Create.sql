@@ -168,11 +168,21 @@ INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES('22
 CREATE LOGIN [TrainingHelperLogin] WITH PASSWORD ='123';
 ---           TrainingHelperLogin
 Go
-
+--so user can restore the DB!
+ALTER SERVER ROLE sysadmin ADD MEMBER [TrainingHelperLogin];
+Go
 CREATE USER [TrainingHelperUser] FOR LOGIN
 [TrainingHelperLogin];
 
 Go
+-- Add the user to the db_owner role to grant admin privileges
+ALTER ROLE db_owner ADD MEMBER [TrainingHelperUser];
+Go
+
+
+
+
+
 
 Select * From Trainee
 Select * From Trainer

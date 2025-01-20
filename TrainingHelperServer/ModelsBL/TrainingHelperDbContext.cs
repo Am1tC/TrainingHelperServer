@@ -41,7 +41,7 @@ public partial class TrainingHelperDbContext : DbContext
 
     public List<Training> GetTrainings()
     {
-        return this.Training.ToList();
+        return this.Training.Include(t => t.Trainer).ToList();
     }
 
 

@@ -35,6 +35,8 @@ namespace TrainingHelperServer.DTO
             this.Date = Tg.Date;
             this.Duration = Tg.Duration;
             this.Picture = Tg.Picture;
+            if (Tg.Trainer != null)
+                this.Trainer = new Trainer(Tg.Trainer);
 
         }
         public Models.Training GetModel()
@@ -47,6 +49,8 @@ namespace TrainingHelperServer.DTO
             tg.Date = this.Date;
             tg.Duration = this.Duration;
             tg.Picture = this.Picture;
+            if (this.Trainer != null)
+                tg.Trainer = this.Trainer.GetModel();
             return tg;
         }
 

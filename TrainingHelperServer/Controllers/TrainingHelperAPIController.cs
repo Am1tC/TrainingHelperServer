@@ -171,7 +171,7 @@ public class TrainingHelperAPIController : ControllerBase
     
 
     [HttpPost("OrderTraining")]
-    public IActionResult OrderTraining(int trainingNumber)
+    public IActionResult OrderTraining([FromBody]int trainingNumber)
     {
         try
         {   // Check if the user is logged in

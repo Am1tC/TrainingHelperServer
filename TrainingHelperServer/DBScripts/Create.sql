@@ -16,6 +16,12 @@ Go
 
 Use TrainingHelperDb;
 Go
+CREATE TABLE [Owner] (
+		OwnerId nvarchar (225) Primary KEY Not null,
+		Email nvarchar (225) Not null,
+		FirstName nvarchar (225) Not null,
+		LastName nvarchar (225) Not null,		
+		);
 
 CREATE TABLE Trainer (
     TrainerId INT IDENTITY(1000,1) PRIMARY KEY NOT NULL,

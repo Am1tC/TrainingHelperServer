@@ -59,6 +59,38 @@ public class TrainingHelperAPIController : ControllerBase
 
 
     }
+    [HttpPost("loginOwner")]
+    public IActionResult LoginOwner([FromBody] DTO.LoginInfo loginDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get model user class from DB with matching email. 
+            Models.Owner? owner = context.GetTrainee(loginDto.Id);
+
+            //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
+            if (trainee == null || trainee.Password != loginDto.Password)
+            {
+                return Unauthorized();
+            }
+
+            //Login suceed! now mark login in session memory!
+            HttpContext.Session.SetString("loggedInUser", trainee.Id.ToString());
+
+            DTO.Trainee dtotrainee = new DTO.Trainee(trainee);
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtotrainee);
+
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+
+    }
 
     [HttpPost("register")]
     public IActionResult Register([FromBody] DTO.Trainee userDto)
@@ -189,7 +221,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
             // Retrieve the trainee using the logged-in user's id
 
-            var trainee = context.GetTrainee(userId); //returns null for unknown reason
+            var trainee = context.GetTrainee(userId); //returns null for unknown reason-- fixed nvm
             if (trainee == null)
             {
                 return BadRequest("Trainee not found.");

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TrainingHelperServer.Models;
 
 [Table("Trainee")]
-[Index("Id", Name = "UQ__Trainee__3214EC06D9BE7801", IsUnique = true)]
+[Index("Id", Name = "UQ__Trainee__3214EC06951E5140", IsUnique = true)]
 public partial class Trainee
 {
     [Key]
@@ -29,7 +29,7 @@ public partial class Trainee
     public DateTime? SubscriptionEndDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? BirthDate { get; set; }
+    public DateTime BirthDate { get; set; }
 
     [StringLength(225)]
     public string? Gender { get; set; }

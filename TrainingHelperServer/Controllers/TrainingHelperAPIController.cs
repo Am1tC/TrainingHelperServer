@@ -59,6 +59,7 @@ public class TrainingHelperAPIController : ControllerBase
 
 
     }
+
     [HttpPost("loginOwner")]
     public IActionResult LoginOwner([FromBody] DTO.LoginInfo loginDto)
     {
@@ -67,20 +68,20 @@ public class TrainingHelperAPIController : ControllerBase
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
             //Get model user class from DB with matching email. 
-            Models.Owner? owner = context.GetTrainee(loginDto.Id);
+            Models.Owner? owner = context.GetOwner(loginDto.Id);
 
             //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
-            if (trainee == null || trainee.Password != loginDto.Password)
+            if (owner == null || owner.Email != loginDto.Password)
             {
                 return Unauthorized();
             }
 
             //Login suceed! now mark login in session memory!
-            HttpContext.Session.SetString("loggedInUser", trainee.Id.ToString());
+            HttpContext.Session.SetString("loggedInUser", owner.OwnerId.ToString());
 
-            DTO.Trainee dtotrainee = new DTO.Trainee(trainee);
+            DTO.Owner dtoOwner = new DTO.Owner(owner);
             //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
-            return Ok(dtotrainee);
+            return Ok(dtoOwner);
 
 
         }

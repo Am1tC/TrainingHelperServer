@@ -17,7 +17,7 @@ namespace TrainingHelperServer.DTO
 
         public DateTime? SubscriptionEndDate { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public string? Gender { get; set; } 
         public string PhoneNum { get; set; } = null!;

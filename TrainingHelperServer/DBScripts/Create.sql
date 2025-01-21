@@ -16,7 +16,7 @@ Go
 
 Use TrainingHelperDb;
 Go
-CREATE TABLE [Owner] (
+CREATE TABLE Owner (
 		OwnerId nvarchar (225) Primary KEY Not null,
 		Email nvarchar (225) Not null,
 		FirstName nvarchar (225) Not null,
@@ -165,7 +165,7 @@ VALUES
 (1002, 1002, 1); -- Charlie -> Muay Thai Training
 
 
---INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
+INSERT INTO Owner (OwnerId,Email,FirstName,LastName) VALUES (2,'S@a.com','dmit','b')
 
 
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email) VALUES('222333444','Amit','b','222a','20-aug-2000','s@s.com')
@@ -198,6 +198,7 @@ select * from Training
 
 select * from TraineesInPractice
 
+select * from Owner
 
 
 Go

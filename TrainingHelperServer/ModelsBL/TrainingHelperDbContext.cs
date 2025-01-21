@@ -33,11 +33,19 @@ public partial class TrainingHelperDbContext : DbContext
 
     }
 
-    public List<Training> GetTraining(DateTime date)
-    {
-      return  this.Training.Where(t => t.Date == date).ToList();
+    //public List<Training> GetTraining(DateTime date)
+    //{
+    //  return  this.Training.Where(t => t.Date == date).ToList();
 
+    //}
+    public Owner? GetOwner(string id)
+    {
+        return this.Owners // Replace with the actual collection name
+                   .Where(u => u.OwnerId == id)
+                   .FirstOrDefault();
     }
+
+
 
     public List<Training> GetTrainings()
     {

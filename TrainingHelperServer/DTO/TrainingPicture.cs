@@ -11,7 +11,6 @@ namespace TrainingHelperServer.DTO
 
         public string PictureEnding { get; set; } = null!;
 
-        public virtual Training? TrainingNumberNavigation { get; set; }
 
         public TrainingPicture () { }
         public TrainingPicture (Models.TrainingPicture tp) 

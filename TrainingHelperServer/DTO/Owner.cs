@@ -7,7 +7,7 @@ namespace TrainingHelperServer.DTO
      
         public string OwnerId { get; set; } = null!;
 
-        public string Email { get; set; } = null!;
+        public string Password { get; set; } = null!;
 
         public string FirstName { get; set; } = null!;
 
@@ -17,7 +17,7 @@ namespace TrainingHelperServer.DTO
         public Owner(Models.Owner owner)
         {
             this.OwnerId = owner.OwnerId;
-            this.Email = owner.Email;
+            this.Password = owner.Password;
             this.FirstName = owner.FirstName;
             this.LastName = owner.LastName;
 
@@ -26,7 +26,7 @@ namespace TrainingHelperServer.DTO
         {
             Models.Owner o = new Models.Owner();
             o.OwnerId = this.OwnerId;
-            o.Email = this.Email;
+            o.Password = this.Password;
             o.FirstName = this.FirstName;
             o.LastName = this.LastName;
             return o;

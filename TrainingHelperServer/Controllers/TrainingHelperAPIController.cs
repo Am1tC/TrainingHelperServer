@@ -50,7 +50,7 @@ public class TrainingHelperAPIController : ControllerBase
             //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtotrainee);
 
-           
+
         }
         catch (Exception ex)
         {
@@ -60,8 +60,8 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    [HttpPost("loginOwner")]
-    public IActionResult LoginOwner([FromBody] DTO.LoginInfo loginDto)
+    [HttpPost("ownerlogin")]
+    public IActionResult OwnerLogin([FromBody] DTO.LoginInfo loginDto)
     {
         try
         {
@@ -71,7 +71,7 @@ public class TrainingHelperAPIController : ControllerBase
             Models.Owner? owner = context.GetOwner(loginDto.Id);
 
             //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
-            if (owner == null || owner.Email != loginDto.Password)
+            if (owner == null || owner.Password != loginDto.Password)
             {
                 return Unauthorized();
             }
@@ -123,7 +123,7 @@ public class TrainingHelperAPIController : ControllerBase
 
 
     //update profile imp
-   [HttpPost("updateUser")]
+    [HttpPost("updateUser")]
     public IActionResult UpdateUser([FromBody] DTO.Trainee userDto)
     {
         try
@@ -189,7 +189,7 @@ public class TrainingHelperAPIController : ControllerBase
             foreach (Models.Training t in list)
             {
                 DTO.Training training = new DTO.Training(t);
-                
+
                 trainings.Add(training);
             }
             return Ok(trainings);
@@ -201,10 +201,10 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    
+
 
     [HttpPost("OrderTraining")]
-    public IActionResult OrderTraining([FromBody]int trainingNumber)
+    public IActionResult OrderTraining([FromBody] int trainingNumber)
     {
         try
         {   // Check if the user is logged in
@@ -213,7 +213,7 @@ public class TrainingHelperAPIController : ControllerBase
             {
                 return Unauthorized("User is not logged in");
             }
-            
+
             // Retrieve the training session for the given training number
             Models.Training? training = context.GetTraining(trainingNumber);
             if (training == null)
@@ -248,14 +248,36 @@ public class TrainingHelperAPIController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-           
+
 
 
     }
 
+    [HttpPost("CreateTraining")]
+    public IActionResult CreateTraining([FromBody]DTO.Training trainingDto)
+    {
+        try
+        {
+            // create model user
+            trainingDto.Trainer = null;
+            Models.Training modeltraining = trainingDto.GetModel();
 
+            context.Training.Add(modeltraining);
+            context.SaveChanges(); // make sure trainer id is real
+            
 
+            trainingDto = new DTO.Training(modeltraining);
+
+            return Ok(trainingDto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Error when creating training");
+        }
+
+    }
 }
+
 
 
 

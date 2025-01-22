@@ -14,7 +14,7 @@ public partial class Owner
     public string OwnerId { get; set; } = null!;
 
     [StringLength(225)]
-    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
 
     [StringLength(225)]
     public string FirstName { get; set; } = null!;

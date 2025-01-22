@@ -41,17 +41,17 @@ public partial class TrainingHelperDbContext : DbContext
     {
         modelBuilder.Entity<Owner>(entity =>
         {
-            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B8D1F9BBBC");
+            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B83ACC7574");
         });
 
         modelBuilder.Entity<Trainee>(entity =>
         {
-            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA52DF623B");
+            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA8EB10D91");
         });
 
         modelBuilder.Entity<TraineesInPractice>(entity =>
         {
-            entity.HasKey(e => new { e.TraineeId, e.TrainingNumber }).HasName("PK__Trainees__2215D18D9D8A7564");
+            entity.HasKey(e => new { e.TraineeId, e.TrainingNumber }).HasName("PK__Trainees__2215D18D9FF6CCAC");
 
             entity.HasOne(d => d.Trainee).WithMany(p => p.TraineesInPractices)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -64,19 +64,19 @@ public partial class TrainingHelperDbContext : DbContext
 
         modelBuilder.Entity<Trainer>(entity =>
         {
-            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7C2699B6F2");
+            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7C645204D8");
         });
 
         modelBuilder.Entity<Training>(entity =>
         {
-            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC04702167C18E");
+            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC0470D0CF4C4A");
 
             entity.HasOne(d => d.Trainer).WithMany(p => p.Training).HasConstraintName("FK__Training__Traine__2E1BDC42");
         });
 
         modelBuilder.Entity<TrainingField>(entity =>
         {
-            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__641895269C169D98");
+            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__641895260CF908AA");
 
             entity.Property(e => e.TrainingFieldId).ValueGeneratedNever();
         });
@@ -97,7 +97,7 @@ public partial class TrainingHelperDbContext : DbContext
 
         modelBuilder.Entity<TrainingPicture>(entity =>
         {
-            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D8638669BE");
+            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D85EEA1006");
 
             entity.HasOne(d => d.TrainingNumberNavigation).WithMany(p => p.TrainingPictures).HasConstraintName("FK__TrainingP__Train__35BCFE0A");
         });

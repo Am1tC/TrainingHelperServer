@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TrainingHelperServer.Models;
 
 [Table("Trainee")]
-[Index("Id", Name = "UQ__Trainee__3214EC06951E5140", IsUnique = true)]
+[Index("Id", Name = "UQ__Trainee__3214EC06ED00CA32", IsUnique = true)]
 public partial class Trainee
 {
     [Key]

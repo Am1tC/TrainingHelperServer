@@ -22,8 +22,14 @@ public partial class TrainingHelperDbContext : DbContext
 
     public Trainer? GetTrainer(string id)
     {
-        return this.Trainers.Where(u => u.Id == id)
+        return this.Trainers.Where(u => u.Id.ToString() == id)
                             .FirstOrDefault();
+    }
+
+    public Trainer GetTrainerViaSerialNumber(int id)
+    {
+        return this.Trainers.Where(u => u.TrainerId == id)
+                           .FirstOrDefault();
     }
 
     public Training? GetTraining(int trainingnumber)

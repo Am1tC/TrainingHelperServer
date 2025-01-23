@@ -26,11 +26,15 @@ namespace TrainingHelperServer.DTO
 
         public string? Picture { get; set; }
 
+        public string? Password { get; set; }
+
         //public virtual ICollection<Training> Training { get; set; } = new List<Training>();
 
         public Trainer() { }
         public Trainer(Models.Trainer tr)
         {
+            this.Password = tr.Password;
+            this.Id = tr.Id;
             this.TrainerId = tr.TrainerId;
             this.FirstName = tr.FirstName;
             this.LastName = tr.LastName;
@@ -44,6 +48,7 @@ namespace TrainingHelperServer.DTO
         public Models.Trainer GetModel()
         {
             Models.Trainer tr = new Models.Trainer();
+            tr.Id = this.Id; 
             tr.TrainerId= this.TrainerId;
             tr.FirstName = this.FirstName;
             tr.LastName = this.LastName;
@@ -52,6 +57,7 @@ namespace TrainingHelperServer.DTO
             tr.PhoneNum = this.PhoneNum;
             tr.Email = this.Email;
             tr.Picture = this.Picture;
+            tr.Password = this.Password;
             return tr;
         }
 

@@ -27,6 +27,8 @@ public class TrainingHelperAPIController : ControllerBase
     {
         return Ok("Server Responded Successfully");
     }
+
+    #region Login
     [HttpPost("login")]
     public IActionResult LoginTrainee([FromBody] DTO.LoginInfo loginDto)
     {
@@ -56,9 +58,38 @@ public class TrainingHelperAPIController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-
-
     }
+
+    [HttpPost("trainerlogin")]
+    public IActionResult TrainerLogin([FromBody] DTO.LoginInfo loginDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get model user class from DB with matching email. 
+            Models.Trainer? trainer = context.GetTrainer(loginDto.Id);
+
+            //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
+            if (trainer == null || trainer.Password != loginDto.Password)
+            {
+                return Unauthorized();
+            }
+
+            //Login suceed! now mark login in session memory!
+            HttpContext.Session.SetString("loggedInUser", trainer.Id.ToString());
+
+            DTO.Trainer dtotrainer = new DTO.Trainer(trainer);
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtotrainer);
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 
     [HttpPost("ownerlogin")]
     public IActionResult OwnerLogin([FromBody] DTO.LoginInfo loginDto)
@@ -92,6 +123,9 @@ public class TrainingHelperAPIController : ControllerBase
 
 
     }
+    #endregion
+
+    #region Register
 
     [HttpPost("register")]
     public IActionResult Register([FromBody] DTO.Trainee userDto)
@@ -120,6 +154,34 @@ public class TrainingHelperAPIController : ControllerBase
         }
 
     }
+
+
+    [HttpPost("registertrainer")]
+    public IActionResult RegisterTrainer([FromBody] DTO.Trainer userDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+         
+            userDto.BirthDate = DateOnly.FromDateTime(DateTime.Now);
+            //Create model user class
+            Models.Trainer modelsUser = userDto.GetModel();
+
+            context.Trainers.Add(modelsUser);
+            context.SaveChanges(); // id is unique 
+            //User was added!
+            DTO.Trainer dtoUser = new DTO.Trainer(modelsUser);
+            //dtoUser.pro = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoUser);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    #endregion
 
 
     //update profile imp
@@ -160,11 +222,6 @@ public class TrainingHelperAPIController : ControllerBase
         }
 
     }
-
-
-
-
-
 
 
 
@@ -259,11 +316,20 @@ public class TrainingHelperAPIController : ControllerBase
         try
         {
             // create model user
+            // make sure trainer id is real
+            var t = context.GetTrainerViaSerialNumber(trainingDto.Trainer.TrainerId); //retruns null
+            if (t == null)
+            {
+                return BadRequest("Trainer not found");
+            }
             trainingDto.Trainer = null;
             Models.Training modeltraining = trainingDto.GetModel();
 
+
+
             context.Training.Add(modeltraining);
-            context.SaveChanges(); // make sure trainer id is real
+
+            context.SaveChanges(); 
             
 
             trainingDto = new DTO.Training(modeltraining);

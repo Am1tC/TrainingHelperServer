@@ -58,9 +58,22 @@ public partial class TrainingHelperDbContext : DbContext
         return this.Training.Include(t => t.Trainer).ToList();
     }
 
+    public List<TraineesInPractice> GetOrderdTrainings(string id)
+    {
+        return this.TraineesInPractices.Where(t => t.TraineeId.ToString() == id).ToList();
+    }
+
+    public List<Trainee> GetAllTrainees()
+    {
+        return this.Trainees.ToList();
+    }
+
+    public List<Trainer> GetAllTrainers()
+    {
+        return this.Trainers.ToList();
+    }
 
 
 
 
 }
- 

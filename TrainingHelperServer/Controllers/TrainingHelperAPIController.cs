@@ -310,7 +310,50 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    [HttpPost("CreateTraining")]
+    [HttpGet("GetUserEvents")]
+    public IActionResult GetUserEvents()
+    {
+        try
+        {
+            //Check if who is logged in
+            string? userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+
+            //Get model user class from DB with matching id. 
+            Models.Trainee? user = context.GetTrainee(userId);
+            List<Models.TraineesInPractice> list = context.GetOrderdTrainings(user.TraineeId.ToString());
+
+            List<DTO.Training> trainings = new List<DTO.Training>();
+          
+
+            foreach (Models.TraineesInPractice t in list)
+            {
+                DTO.Training training = new DTO.Training(context.GetTraining(t.TrainingNumber));
+
+                trainings.Add(training);
+            }
+
+            return Ok(trainings);
+
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+
+
+
+
+
+       [HttpPost("CreateTraining")]
     public IActionResult CreateTraining([FromBody]DTO.Training trainingDto)
     {
         try
@@ -342,6 +385,13 @@ public class TrainingHelperAPIController : ControllerBase
         }
 
     }
+
+    [HttpPost("ShowTrainees")]
+
+
+
+
+
 }
 
 

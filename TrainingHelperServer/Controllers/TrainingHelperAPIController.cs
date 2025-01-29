@@ -258,6 +258,99 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    [HttpGet("GetTrainees")]
+    public IActionResult GetTrainees()
+    {
+        try
+        {
+            // Check if the user is logged in
+            string userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            List<Models.Trainee> list = context.GetAllTrainees();
+            List<DTO.Trainee> trainees = new List<DTO.Trainee>();
+            foreach (Models.Trainee t in list)
+            {
+                DTO.Trainee trainee = new DTO.Trainee(t);
+                trainees.Add(trainee);
+            }
+            return Ok(trainees);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("DeleteTrainee")]
+    public IActionResult DeleteTrainee([FromBody] string traineeNumber)
+    {
+        try 
+        {
+            string userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+            
+            DTO.Trainee trainee = new DTO.Trainee(context.GetTrainee(traineeNumber));
+            if (trainee == null)
+            {
+                return NotFound("Trainee not found.");
+            }
+            Models.Trainee temp = trainee.GetModel();
+            context.Trainees.Remove(temp);
+
+
+            context.SaveChanges();
+
+
+            //Task was updated!
+            return Ok();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+
+    }
+
+
+
+
+
+        [HttpGet("GetTrainers")]
+    public IActionResult GetTrainers()
+    {
+        try
+        {
+            // Check if the user is logged in
+            string userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            List<Models.Trainer> list = context.GetAllTrainers();
+            List<DTO.Trainer> trainers = new List<DTO.Trainer>();
+            foreach (Models.Trainer t in list)
+            {
+                DTO.Trainer trainer = new DTO.Trainer(t);
+                trainers.Add(trainer);
+            }
+            return Ok(trainers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 
 
     [HttpPost("OrderTraining")]
@@ -386,7 +479,7 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
-    [HttpPost("ShowTrainees")]
+   
 
 
 

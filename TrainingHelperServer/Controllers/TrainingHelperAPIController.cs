@@ -320,11 +320,46 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    [HttpPost("DeleteTrainer")]
+    public IActionResult DeleteTrainer([FromBody] string trainerNumber)
+    {
+        try
+        {
+            string userId = HttpContext.Session.GetString("loggedInUser");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            DTO.Trainer trainer = new DTO.Trainer(context.GetTrainer(trainerNumber));
+            if (trainer == null)
+            {
+                return NotFound("Trainer not found.");
+            }
+            Models.Trainer temp = trainer.GetModel();
+            context.Trainers.Remove(temp);
+
+
+            context.SaveChanges();
+
+
+            //Task was updated!
+            return Ok();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+
+    }
 
 
 
 
-        [HttpGet("GetTrainers")]
+
+    [HttpGet("GetTrainers")]
     public IActionResult GetTrainers()
     {
         try

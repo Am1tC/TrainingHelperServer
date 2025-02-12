@@ -62,6 +62,11 @@ public partial class TrainingHelperDbContext : DbContext
     {
         return this.TraineesInPractices.Where(t => t.TraineeId.ToString() == id).ToList();
     }
+    public List<Training> GetTrainerTrainings(string id)
+    {
+        return this.Training.Where(t => t.TrainerId.ToString() == id).ToList();
+    }
+
 
     public List<Trainee> GetAllTrainees()
     {

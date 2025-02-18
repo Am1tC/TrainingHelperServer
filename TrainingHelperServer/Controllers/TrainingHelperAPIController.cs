@@ -61,7 +61,7 @@ public class TrainingHelperAPIController : ControllerBase
     }
 
     [HttpPost("trainerlogin")]
-    public IActionResult TrainerLogin([FromBody] DTO.LoginInfo loginDto)
+    public IActionResult trainerLogin([FromBody] DTO.LoginInfo loginDto) // doesnt connect
     {
         try
         {

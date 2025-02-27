@@ -41,65 +41,69 @@ public partial class TrainingHelperDbContext : DbContext
     {
         modelBuilder.Entity<Owner>(entity =>
         {
-            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B83ACC7574");
+            entity.HasKey(e => e.OwnerId).HasName("PK__Owner__819385B847665012");
         });
 
         modelBuilder.Entity<Trainee>(entity =>
         {
-            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA8EB10D91");
+            entity.HasKey(e => e.TraineeId).HasName("PK__Trainee__3BA911CA24821844");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<TraineesInPractice>(entity =>
         {
-            entity.HasKey(e => new { e.TraineeId, e.TrainingNumber }).HasName("PK__Trainees__2215D18D9FF6CCAC");
+            entity.HasKey(e => new { e.TraineeId, e.TrainingNumber }).HasName("PK__Trainees__2215D18D5DB338BD");
 
             entity.HasOne(d => d.Trainee).WithMany(p => p.TraineesInPractices)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TraineesI__Train__30F848ED");
+                .HasConstraintName("FK__TraineesI__Train__32E0915F");
 
             entity.HasOne(d => d.TrainingNumberNavigation).WithMany(p => p.TraineesInPractices)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TraineesI__Train__31EC6D26");
+                .HasConstraintName("FK__TraineesI__Train__33D4B598");
         });
 
         modelBuilder.Entity<Trainer>(entity =>
         {
-            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7C645204D8");
+            entity.HasKey(e => e.TrainerId).HasName("PK__Trainer__366A1A7CE9DED212");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Training>(entity =>
         {
-            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC0470D0CF4C4A");
+            entity.HasKey(e => e.TrainingNumber).HasName("PK__Training__9BCC0470AEC788DD");
 
-            entity.HasOne(d => d.Trainer).WithMany(p => p.Training).HasConstraintName("FK__Training__Traine__2E1BDC42");
+            entity.HasOne(d => d.Trainer).WithMany(p => p.Training).HasConstraintName("FK__Training__Traine__300424B4");
         });
 
         modelBuilder.Entity<TrainingField>(entity =>
         {
-            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__641895260CF908AA");
+            entity.HasKey(e => e.TrainingFieldId).HasName("PK__Training__64189526A31CB8F2");
 
             entity.Property(e => e.TrainingFieldId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<TrainingFieldsInTrainer>(entity =>
         {
-            entity.HasOne(d => d.Trainer).WithMany().HasConstraintName("FK__TrainingF__Train__37A5467C");
+            entity.HasOne(d => d.Trainer).WithMany().HasConstraintName("FK__TrainingF__Train__398D8EEE");
 
-            entity.HasOne(d => d.TrainingField).WithMany().HasConstraintName("FK__TrainingF__Train__38996AB5");
+            entity.HasOne(d => d.TrainingField).WithMany().HasConstraintName("FK__TrainingF__Train__3A81B327");
         });
 
         modelBuilder.Entity<TrainingFieldsInTraining>(entity =>
         {
-            entity.HasOne(d => d.TrainingField).WithMany().HasConstraintName("FK__TrainingF__Train__3A81B327");
+            entity.HasOne(d => d.TrainingField).WithMany().HasConstraintName("FK__TrainingF__Train__3C69FB99");
 
-            entity.HasOne(d => d.TrainingNumberNavigation).WithMany().HasConstraintName("FK__TrainingF__Train__3B75D760");
+            entity.HasOne(d => d.TrainingNumberNavigation).WithMany().HasConstraintName("FK__TrainingF__Train__3D5E1FD2");
         });
 
         modelBuilder.Entity<TrainingPicture>(entity =>
         {
-            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D85EEA1006");
+            entity.HasKey(e => e.PictureId).HasName("PK__Training__8C2866D8DECC563E");
 
-            entity.HasOne(d => d.TrainingNumberNavigation).WithMany(p => p.TrainingPictures).HasConstraintName("FK__TrainingP__Train__35BCFE0A");
+            entity.HasOne(d => d.TrainingNumberNavigation).WithMany(p => p.TrainingPictures).HasConstraintName("FK__TrainingP__Train__37A5467C");
         });
 
         OnModelCreatingPartial(modelBuilder);

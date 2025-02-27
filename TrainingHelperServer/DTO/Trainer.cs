@@ -28,6 +28,7 @@ namespace TrainingHelperServer.DTO
 
         public string? Password { get; set; }
 
+        public bool IsActive { get; set; }
         //public virtual ICollection<Training> Training { get; set; } = new List<Training>();
 
         public Trainer() { }
@@ -43,6 +44,7 @@ namespace TrainingHelperServer.DTO
             this.PhoneNum = tr.PhoneNum;
             this.Email = tr.Email;
             this.Picture = tr.Picture;
+            this.IsActive = tr.IsActive;
         }
 
         public Models.Trainer GetModel()
@@ -58,6 +60,7 @@ namespace TrainingHelperServer.DTO
             tr.Email = this.Email;
             tr.Picture = this.Picture;
             tr.Password = this.Password;
+            tr.IsActive = this.IsActive;
             return tr;
         }
 

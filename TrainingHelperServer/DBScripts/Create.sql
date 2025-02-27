@@ -33,7 +33,8 @@ CREATE TABLE Trainer (
     PhoneNum NVARCHAR(225) NOT NULL,
     Email NVARCHAR(225) NOT NULL,
     Picture NVARCHAR(225),
-    Password NVARCHAR(225)
+    Password NVARCHAR(225),
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Create Trainee table
@@ -49,7 +50,8 @@ CREATE TABLE Trainee (
     PhoneNum NVARCHAR(225),
     Email NVARCHAR(225),
     Picture NVARCHAR(225),
-    Password NVARCHAR(225)
+    Password NVARCHAR(225),
+    IsActive BIT NOT NULL DEFAULT 1
 );
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email,Gender,PhoneNum,Picture,SubscriptionStartDate,SubscriptionEndDate) VALUES(223,'Amit','C',223,'20-aug-2007','amitchachan1@gmail.com','m','0500000000','.jpg','29-aug-2024','29-aug-2025')
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email,Gender,PhoneNum,Picture,SubscriptionStartDate,SubscriptionEndDate) VALUES(223223223,'Amit','C','223a','20-aug-2007','s@s.com','m','0506666666','.jpg','29-aug-2024','29-aug-2025')

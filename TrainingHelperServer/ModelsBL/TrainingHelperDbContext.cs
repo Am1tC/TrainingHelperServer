@@ -9,7 +9,7 @@ public partial class TrainingHelperDbContext : DbContext
 {
     public Trainee? GetTrainee(string id)
     {
-        return this.Trainees.Where(u => u.Id == id)
+        return this.Trainees.Where(u => u.Id == id && u.IsActive == true)
                             .FirstOrDefault();
                             
     }
@@ -22,13 +22,13 @@ public partial class TrainingHelperDbContext : DbContext
 
     public Trainer? GetTrainer(string id)
     {
-        return this.Trainers.Where(u => u.Id.ToString() == id)
+        return this.Trainers.Where(u => u.Id.ToString() == id && u.IsActive == true)
                             .FirstOrDefault();
     }
 
     public Trainer GetTrainerViaSerialNumber(int id)
     {
-        return this.Trainers.Where(u => u.TrainerId == id)
+        return this.Trainers.Where(u => u.TrainerId == id && u.IsActive == true)
                            .FirstOrDefault();
     }
 
@@ -70,12 +70,12 @@ public partial class TrainingHelperDbContext : DbContext
 
     public List<Trainee> GetAllTrainees()
     {
-        return this.Trainees.ToList();
+        return this.Trainees.Where(t=> t.IsActive == true).ToList();
     }
 
     public List<Trainer> GetAllTrainers()
     {
-        return this.Trainers.ToList();
+        return this.Trainers.Where(t => t.IsActive == true).ToList();
     }
 
 

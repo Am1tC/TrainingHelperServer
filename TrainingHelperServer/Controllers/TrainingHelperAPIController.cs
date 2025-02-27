@@ -136,7 +136,7 @@ public class TrainingHelperAPIController : ControllerBase
 
             userDto.SubscriptionStartDate = DateTime.Now;
             userDto.SubscriptionEndDate = DateTime.Now.AddYears(1);
-            userDto.BirthDate = DateTime.Now;
+           // userDto.BirthDate = DateTime.Now;
             //Create model user class
             Models.Trainee modelsUser = userDto.GetModel();
 
@@ -203,6 +203,32 @@ public class TrainingHelperAPIController : ControllerBase
             dtoUser.Picture = GetProfileImageVirtualPath(int.Parse(dtoUser.Id));
             return Ok(dtoUser);
         }   
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    [HttpPost("RegisterTrainerWithImage")]
+    public async Task<IActionResult> RegisterTrainerWithImageAsync([FromForm] DTO.Trainer userDto, IFormFile file)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Create model user class
+            Models.Trainer modelsUser = userDto.GetModel();
+
+            context.Trainers.Add(modelsUser);
+            context.SaveChanges();
+
+            DTO.Trainer dtoUser = new DTO.Trainer(modelsUser);
+
+            //User was added! Now save the file
+            await SaveProfileImageAsync(int.Parse(dtoUser.Id), file);
+            dtoUser.Picture = GetProfileImageVirtualPath(int.Parse(dtoUser.Id));
+            return Ok(dtoUser);
+        }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
@@ -328,7 +354,7 @@ public class TrainingHelperAPIController : ControllerBase
                 return NotFound("Trainee not found.");
             }
             Models.Trainee temp = trainee.GetModel();
-            context.Trainees.Remove(temp);
+            temp.IsActive = false;
 
 
             context.SaveChanges();
@@ -363,7 +389,7 @@ public class TrainingHelperAPIController : ControllerBase
                 return NotFound("Trainer not found.");
             }
             Models.Trainer temp = trainer.GetModel();
-            context.Trainers.Remove(temp);
+            temp.IsActive = false;
 
 
             context.SaveChanges();

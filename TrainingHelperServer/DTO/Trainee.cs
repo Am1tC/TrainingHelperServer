@@ -26,6 +26,7 @@ namespace TrainingHelperServer.DTO
 
         public string? Picture { get; set; }
         public string? Password { get; set; }
+        public bool IsActive { get; set; }
 
         public Trainee() { }
         public Trainee(Models.Trainee trainee) 
@@ -42,6 +43,7 @@ namespace TrainingHelperServer.DTO
             this.Email = trainee.Email;
             this.Picture = trainee.Picture;
             this.Password = trainee.Password;
+            this.IsActive = trainee.IsActive;
 
         }
 
@@ -59,6 +61,7 @@ namespace TrainingHelperServer.DTO
             t.Email = this.Email;
             t.Password = this.Password;
             t.Picture = this.Picture;
+            t.IsActive = this.IsActive;
             return t;
         }
 

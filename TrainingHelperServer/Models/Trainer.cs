@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TrainingHelperServer.Models;
 
 [Table("Trainer")]
-[Index("Id", Name = "UQ__Trainer__3214EC066A76E399", IsUnique = true)]
+[Index("Id", Name = "UQ__Trainer__3214EC06406E0535", IsUnique = true)]
 public partial class Trainer
 {
     [Key]
@@ -38,6 +38,8 @@ public partial class Trainer
 
     [StringLength(225)]
     public string? Password { get; set; }
+
+    public bool IsActive { get; set; }
 
     [InverseProperty("Trainer")]
     public virtual ICollection<Training> Training { get; set; } = new List<Training>();

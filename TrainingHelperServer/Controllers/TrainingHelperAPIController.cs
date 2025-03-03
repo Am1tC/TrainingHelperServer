@@ -183,6 +183,7 @@ public class TrainingHelperAPIController : ControllerBase
     }
     #endregion
 
+    #region remove
     [HttpPost("registerWithImage")]
     public async Task<IActionResult> RegisterWithImageAsync([FromForm] DTO.Trainee userDto, IFormFile file)
     {
@@ -235,7 +236,7 @@ public class TrainingHelperAPIController : ControllerBase
         }
 
     }
-
+    #endregion
     //update profile imp
     [HttpPost("updateUser")]
     public IActionResult UpdateUser([FromBody] DTO.Trainee userDto)
@@ -575,7 +576,7 @@ public class TrainingHelperAPIController : ControllerBase
         {
             // create model user
             // make sure trainer id is real
-            var t = context.GetTrainerViaSerialNumber(trainingDto.Trainer.TrainerId); //retruns null
+            var t = context.GetTrainerViaSerialNumber(trainingDto.TrainerId.Value); //retruns null
             if (t == null)
             {
                 return BadRequest("Trainer not found");

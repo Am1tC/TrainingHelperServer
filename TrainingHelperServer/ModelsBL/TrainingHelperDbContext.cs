@@ -25,6 +25,11 @@ public partial class TrainingHelperDbContext : DbContext
         return this.Trainers.Where(u => u.Id.ToString() == id && u.IsActive == true)
                             .FirstOrDefault();
     }
+    public int GetTrainerId(string id)
+    {
+        return this.Trainers.Where(u => u.Id.ToString() == id && u.IsActive == true)
+                            .FirstOrDefault().TrainerId;
+    }
 
     public Trainer GetTrainerViaSerialNumber(int id)
     {

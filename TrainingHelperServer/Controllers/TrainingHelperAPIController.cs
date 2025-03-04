@@ -576,14 +576,14 @@ public class TrainingHelperAPIController : ControllerBase
         {
             // create model user
             // make sure trainer id is real
-            var t = context.GetTrainerViaSerialNumber(trainingDto.TrainerId.Value); //retruns null
+            var t = context.GetTrainer(trainingDto.TrainerId.Value.ToString()); //retruns null
             if (t == null)
             {
                 return BadRequest("Trainer not found");
             }
             trainingDto.Trainer = null;
             Models.Training modeltraining = trainingDto.GetModel();
-
+            modeltraining.TrainerId = context.GetTrainerId(trainingDto.TrainerId.ToString());
 
 
             context.Training.Add(modeltraining);

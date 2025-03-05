@@ -49,7 +49,7 @@ public class TrainingHelperAPIController : ControllerBase
             HttpContext.Session.SetString("loggedInUser", trainee.Id.ToString());
 
             DTO.Trainee dtotrainee = new DTO.Trainee(trainee);
-            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            dtotrainee.Picture = GetProfileImageVirtualPath(dtotrainee.Id);
             return Ok(dtotrainee);
 
 
@@ -80,7 +80,7 @@ public class TrainingHelperAPIController : ControllerBase
             HttpContext.Session.SetString("loggedInUser", trainer.Id.ToString());
 
             DTO.Trainer dtotrainer = new DTO.Trainer(trainer);
-            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            dtotrainer.Picture = GetProfileImageVirtualPath(dtotrainer.Id);
             return Ok(dtotrainer);
 
         }
@@ -145,7 +145,7 @@ public class TrainingHelperAPIController : ControllerBase
 
             //User was added!
             DTO.Trainee dtoUser = new DTO.Trainee(modelsUser);
-            //dtoUser.pro = GetProfileImageVirtualPath(dtoUser.Id);
+            dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
         }
         catch (Exception ex)
@@ -161,7 +161,7 @@ public class TrainingHelperAPIController : ControllerBase
     {
         try
         {
-            HttpContext.Session.Clear(); //Logout any previous login attempt
+            //HttpContext.Session.Clear(); //Logout any previous login attempt
 
          
             userDto.BirthDate = DateOnly.FromDateTime(DateTime.Now);
@@ -172,7 +172,7 @@ public class TrainingHelperAPIController : ControllerBase
             context.SaveChanges(); // id is unique 
             //User was added!
             DTO.Trainer dtoUser = new DTO.Trainer(modelsUser);
-            //dtoUser.pro = GetProfileImageVirtualPath(dtoUser.Id);
+            dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
         }
         catch (Exception ex)
@@ -201,7 +201,7 @@ public class TrainingHelperAPIController : ControllerBase
 
             //User was added! Now save the file
             await SaveProfileImageAsync(int.Parse(dtoUser.Id), file);
-            dtoUser.Picture = GetProfileImageVirtualPath(int.Parse(dtoUser.Id));
+            dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
         }   
         catch (Exception ex)
@@ -215,7 +215,7 @@ public class TrainingHelperAPIController : ControllerBase
     {
         try
         {
-            HttpContext.Session.Clear(); //Logout any previous login attempt
+           // HttpContext.Session.Clear(); //Logout any previous login attempt
 
             //Create model user class
             Models.Trainer modelsUser = userDto.GetModel();
@@ -227,7 +227,7 @@ public class TrainingHelperAPIController : ControllerBase
 
             //User was added! Now save the file
             await SaveProfileImageAsync(int.Parse(dtoUser.Id), file);
-            dtoUser.Picture = GetProfileImageVirtualPath(int.Parse(dtoUser.Id));
+            dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
         }
         catch (Exception ex)
@@ -276,6 +276,135 @@ public class TrainingHelperAPIController : ControllerBase
 
     }
 
+    [HttpPost("UploadProfileImage")]
+    public async Task<IActionResult> UploadProfileImageAsync(IFormFile file) //gets here instead of trainer
+    {
+        //Check if who is logged in
+        string? userid = HttpContext.Session.GetString("loggedInUser");
+        if (string.IsNullOrEmpty(userid))
+        {
+            return Unauthorized("User is not logged in");
+        }
+
+        //Get model user class from DB with matching email. 
+        Models.Trainee? user = context.GetTrainee(userid);
+        //Clear the tracking of all objects to avoid double tracking
+        context.ChangeTracker.Clear();
+
+        if (user == null)
+        {
+            return Unauthorized("User is not found in the database");
+        }
+
+
+        //Read all files sent
+        long imagesSize = 0;
+
+        if (file.Length > 0)
+        {
+            //Check the file extention!
+            string[] allowedExtentions = { ".png", ".jpg" };
+            string extention = "";
+            if (file.FileName.LastIndexOf(".") > 0)
+            {
+                extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+            }
+            if (!allowedExtentions.Where(e => e == extention).Any())
+            {
+                //Extention is not supported
+                return BadRequest("File sent with non supported extention");
+            }
+
+            //Build path in the web root (better to a specific folder under the web root
+            string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{user.Id}{extention}";
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await file.CopyToAsync(stream);
+
+                if (IsImage(stream))
+                {
+                    imagesSize += stream.Length;
+                }
+                else
+                {
+                    //Delete the file if it is not supported!
+                    System.IO.File.Delete(filePath);
+                }
+
+            }
+
+        }
+
+        DTO.Trainee dtoUser = new DTO.Trainee(user);
+        dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
+        return Ok(dtoUser);
+    }
+
+    [HttpPost("UploadTrainerProfileImage")]
+    public async Task<IActionResult> UploadTrainerProfileImageAsync(IFormFile file)
+    {
+        //Check if who is logged in
+        string? userid = HttpContext.Session.GetString("loggedInUser");
+        if (string.IsNullOrEmpty(userid))
+        {
+            return Unauthorized("User is not logged in");
+        }
+
+        //Get model user class from DB with matching email. 
+        Models.Trainer? user = context.GetTrainer(userid);
+        //Clear the tracking of all objects to avoid double tracking
+        context.ChangeTracker.Clear();
+
+        if (user == null)
+        {
+            return Unauthorized("User is not found in the database");
+        }
+
+
+        //Read all files sent
+        long imagesSize = 0;
+
+        if (file.Length > 0)
+        {
+            //Check the file extention!
+            string[] allowedExtentions = { ".png", ".jpg" };
+            string extention = "";
+            if (file.FileName.LastIndexOf(".") > 0)
+            {
+                extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+            }
+            if (!allowedExtentions.Where(e => e == extention).Any())
+            {
+                //Extention is not supported
+                return BadRequest("File sent with non supported extention");
+            }
+
+            //Build path in the web root (better to a specific folder under the web root
+            string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{user.Id}{extention}";
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await file.CopyToAsync(stream);
+
+                if (IsImage(stream))
+                {
+                    imagesSize += stream.Length;
+                }
+                else
+                {
+                    //Delete the file if it is not supported!
+                    System.IO.File.Delete(filePath);
+                }
+
+            }
+
+        }
+
+        DTO.Trainer dtoUser = new DTO.Trainer(user);
+        dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
+        return Ok(dtoUser);
+    }
 
 
     [HttpGet("GetTrainings")]
@@ -634,7 +763,7 @@ public class TrainingHelperAPIController : ControllerBase
 
     //this function check which profile image exist and return the virtual path of it.
     //if it does not exist it returns the default profile image virtual path
-    private string GetProfileImageVirtualPath(int userId)
+    private string GetProfileImageVirtualPath(string userId)
     {
         string virtualPath = $"/profileImages/{userId}";
         string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{userId}.png";

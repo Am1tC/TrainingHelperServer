@@ -458,6 +458,7 @@ public class TrainingHelperAPIController : ControllerBase
             foreach (Models.Trainee t in list)
             {
                 DTO.Trainee trainee = new DTO.Trainee(t);
+                trainee.Picture = GetProfileImageVirtualPath(t.Id);
                 trainees.Add(trainee);
             }
             return Ok(trainees);
@@ -559,6 +560,7 @@ public class TrainingHelperAPIController : ControllerBase
             foreach (Models.Trainer t in list)
             {
                 DTO.Trainer trainer = new DTO.Trainer(t);
+                trainer.Picture = GetProfileImageVirtualPath(t.Id);
                 trainers.Add(trainer);
             }
             return Ok(trainers);
@@ -781,7 +783,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
             else
             {
-                virtualPath = $"/profileImages/default.png";
+                virtualPath = $"/profileImages/default.jpg";
             }
         }
 

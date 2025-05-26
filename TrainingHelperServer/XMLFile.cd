@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TrainingHelperServer.Models.Owner" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAIAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Owner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.Trainee" Collapsed="true">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAADgEAAACAAAACAEAAAAAQkAAAAAAACCAAAAAAAAAg=</HashCode>
+      <FileName>Models\Trainee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.Training" Collapsed="true">
+    <Position X="3.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAIAAACAAAAEAAABAAEAACAAAABAEAAAAAACAA=</HashCode>
+      <FileName>Models\Training.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Trainer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.Trainer" Collapsed="true">
+    <Position X="6.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACgEAAACAAAACAEAAABAQAEAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Models\Trainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.TraineesInPractice" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAABAAgAAAAAAAEAAAAgAAAAAA=</HashCode>
+      <FileName>Models\TraineesInPractice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Trainee" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.TrainingField" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAA=</HashCode>
+      <FileName>Models\TrainingField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.TrainingFieldsInTrainer" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAABAAAAACAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\TrainingFieldsInTrainer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TrainingField" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.TrainingFieldsInTraining" Collapsed="true">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAEAAAAAAAABAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\TrainingFieldsInTraining.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrainingHelperServer.Models.TrainingHelperDbContext" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgCFAYAQCAABEAAAEAiEEAAAAAAAAAAACkQEAIA=</HashCode>
+      <FileName>Models\TrainingHelperDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Seoge UI" Size="9" />
+</ClassDiagram>

@@ -81,7 +81,7 @@ public class TrainingHelperAPIController : ControllerBase
             HttpContext.Session.SetString("loggedInUser", trainer.Id.ToString());
 
             DTO.Trainer dtotrainer = new DTO.Trainer(trainer);
-            dtotrainer.Picture = GetProfileImageVirtualPath(dtotrainer.Id);
+            dtotrainer.Picture = GetTrainerProfileImageVirtualPath(dtotrainer.Id);
             return Ok(dtotrainer);
 
         }
@@ -403,7 +403,7 @@ public class TrainingHelperAPIController : ControllerBase
         }
 
         DTO.Trainer dtoUser = new DTO.Trainer(user);
-        dtoUser.Picture = GetProfileImageVirtualPath(dtoUser.Id);
+        dtoUser.Picture = GetTrainerProfileImageVirtualPath(dtoUser.Id);
         return Ok(dtoUser);
     }
 
@@ -560,7 +560,7 @@ public class TrainingHelperAPIController : ControllerBase
             foreach (Models.Trainer t in list)
             {
                 DTO.Trainer trainer = new DTO.Trainer(t);
-                trainer.Picture = GetProfileImageVirtualPath(t.Id);
+                trainer.Picture = GetTrainerProfileImageVirtualPath(t.Id);
                 trainers.Add(trainer);
             }
             return Ok(trainers);
@@ -789,6 +789,31 @@ public class TrainingHelperAPIController : ControllerBase
 
         return virtualPath;
     }
+
+    private string GetTrainerProfileImageVirtualPath(string userId)
+    {
+        string virtualPath = $"/profileImages/Trainers/{userId}";
+        string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\Trainers\\{userId}.png";
+        if (System.IO.File.Exists(path))
+        {
+            virtualPath += ".png";
+        }
+        else
+        {
+            path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\Trainers\\{userId}.jpg";
+            if (System.IO.File.Exists(path))
+            {
+                virtualPath += ".jpg";
+            }
+            else
+            {
+                virtualPath = $"/profileImages/DefaultT.jpg";
+            }
+        }
+
+        return virtualPath;
+    }
+
 
     //THis function gets a userId and a profile image file and save the image in the server
     //The function return the full path of the file saved

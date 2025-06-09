@@ -382,7 +382,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
 
             //Build path in the web root (better to a specific folder under the web root
-            string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{user.Id}{extention}";
+            string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\Trainers\\{user.Id}{extention}";
 
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -807,7 +807,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
             else
             {
-                virtualPath = $"/profileImages/DefaultT.jpg";
+                virtualPath = $"/profileImages/Trainers/DefaultT.jpg";
             }
         }
 

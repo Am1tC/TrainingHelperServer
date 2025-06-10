@@ -62,6 +62,7 @@ namespace TrainingHelperServer.DTO
             t.Password = this.Password;
             t.Picture = this.Picture;
             t.IsActive = this.IsActive;
+            t.TraineeId = this.TraineeId;
             return t;
         }
 

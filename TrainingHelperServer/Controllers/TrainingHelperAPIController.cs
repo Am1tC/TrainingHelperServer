@@ -481,6 +481,7 @@ public class TrainingHelperAPIController : ControllerBase
             }
             
             DTO.Trainee trainee = new DTO.Trainee(context.GetTrainee(traineeNumber));
+            context.ChangeTracker.Clear();
             if (trainee == null)
             {
                 return NotFound("Trainee not found.");
@@ -488,6 +489,7 @@ public class TrainingHelperAPIController : ControllerBase
             Models.Trainee temp = trainee.GetModel();
             temp.IsActive = false;
 
+            context.Entry(temp).State = EntityState.Modified;
 
             context.SaveChanges();
 
@@ -516,12 +518,14 @@ public class TrainingHelperAPIController : ControllerBase
             }
 
             DTO.Trainer trainer = new DTO.Trainer(context.GetTrainer(trainerNumber));
+            context.ChangeTracker.Clear();
             if (trainer == null)
             {
                 return NotFound("Trainer not found.");
             }
             Models.Trainer temp = trainer.GetModel();
             temp.IsActive = false;
+            context.Entry(temp).State = EntityState.Modified;
 
 
             context.SaveChanges();
@@ -604,6 +608,10 @@ public class TrainingHelperAPIController : ControllerBase
             {
                 return BadRequest("You are already signed up for this training.");
             }
+
+            if (training.TraineesInPractices.Count == training.MaxParticipants)
+                return BadRequest("Too many people are signed up");
+
             // Add the trainee to the training
             context.TraineesInPractices.Add(new Models.TraineesInPractice
             {

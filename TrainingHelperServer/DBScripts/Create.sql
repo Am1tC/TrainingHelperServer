@@ -114,7 +114,9 @@ INSERT INTO Trainee (Id, FirstName, LastName, PhoneNum, Email)
 VALUES
 ('T1', 'Alice', 'Johnson', '1112223333', 'alice.johnson@example.com'),
 ('T2', 'Bob', 'Williams', '2223334444', 'bob.williams@example.com'),
-('T3', 'Charlie', 'Brown', '3334445555', 'charlie.brown@example.com');
+('T3', 'Charlie', 'Brown', '3334445555', 'charlie.brown@example.com'),
+('330845256' ,'Guy','Jaffe','0546884256','jaffe1@gmail.com'),
+('330624289' ,'Ran','Nuriely','0589845216','ran@gmail.com');
 
 -- Insert data into TrainingField
 INSERT INTO TrainingField (TrainingFieldId, Field)
@@ -183,7 +185,7 @@ VALUES
 
 
 INSERT INTO Owner (OwnerId,Password,FirstName,LastName) VALUES (2,'2','dmit','b')
-
+INSERT INTO Owner (OwnerId,Password,FirstName,LastName) VALUES (217327741,'a1','Amit','Chacham')
 
 INSERT INTO Trainee (Id,FirstName,LastName,Password, BirthDate,Email,PhoneNum) VALUES('333','Amit','b','333','20-aug-2000','amitchachan1@gmail.com','0')
 
